@@ -15,8 +15,8 @@
 
 #define MINU_ITEM_TEXT_SEPARATOR_DEFAULT  "|"   // Separates the main and auxiliary text sections of a menu item
 #define MINU_TITLE_PADDING_DEFAULT        "_"   // Padding character for page title
-#define MINU_FOREGROUND_COLOUR_DEFAULT    WHITE	// Text foreground default colour
-#define MINU_BACKGROUND_COLOUR_DEFAULT    BLACK	// Text background default colour
+#define MINU_FOREGROUND_COLOUR_DEFAULT    0xFFFF// Text foreground default colour
+#define MINU_BACKGROUND_COLOUR_DEFAULT    0x0000// Text background default colour
 #define MINU_AUX_TEXT_LEN_DEFAULT         0
 #define MINU_MAIN_TEXT_LEN_DEFAULT        10
 
@@ -387,6 +387,30 @@ public:
     this->_currentPage = 0;
     this->_rendered = true;
   }
+
+  Minu()
+  {
+    this->_mainTextLen = MINU_MAIN_TEXT_LEN_DEFAULT;
+    this->_auxTextLen = MINU_AUX_TEXT_LEN_DEFAULT;
+    this->_currentPage = 0;
+    this->_rendered = true;
+  }
+
+  void setPrintFunctions(MinuPrintFunction print, MinuPrintFunction printInverted)
+  {
+    if(print)
+      this->_print_txt = print;
+    
+    if(printInverted)
+      this->_print_txt_inverted = printInverted;
+  }
+
+  void setTextLength(uint8_t mainTextLen, uint8_t auxTextLen)
+  {
+    this->_mainTextLen = (mainTextLen) ? mainTextLen : MINU_MAIN_TEXT_LEN_DEFAULT;
+    this->_auxTextLen = (auxTextLen) ? auxTextLen : MINU_AUX_TEXT_LEN_DEFAULT;
+  }
+
   /// @brief Register a new page to the Minu
   /// @param title Title of the new page
   /// @return Id assigned to the page
